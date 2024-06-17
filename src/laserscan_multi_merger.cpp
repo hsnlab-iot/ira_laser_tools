@@ -91,8 +91,8 @@ LaserscanMerger::LaserscanMerger() : Node("laserscan_multi_merger")
 
 	this->laserscan_topic_parser();
 
-	point_cloud_publisher_ = this->create_publisher<sensor_msgs::msg::PointCloud2>(cloud_destination_topic.c_str(), rclcpp::SensorDataQoS());
-	laser_scan_publisher_ = this->create_publisher<sensor_msgs::msg::LaserScan>(scan_destination_topic.c_str(), rclcpp::SensorDataQoS());
+	point_cloud_publisher_ = this->create_publisher<sensor_msgs::msg::PointCloud2>(cloud_destination_topic.c_str(), 5);
+	laser_scan_publisher_ = this->create_publisher<sensor_msgs::msg::LaserScan>(scan_destination_topic.c_str(), 5);
 }
 
 rcl_interfaces::msg::SetParametersResult LaserscanMerger::reconfigureCallback(const std::vector<rclcpp::Parameter> &parameters)
@@ -156,7 +156,7 @@ void LaserscanMerger::laserscan_topic_parser()
 
 	while (!tokens.empty())
 	{
-		RCLCPP_INFO(this->get_logger(), "Waiting for topics ...  " + laserscan_topics);
+		RCLCPP_INFO(this->get_logger(), "Waiting for topics ...  ");
 		
 		sleep(1);
 
